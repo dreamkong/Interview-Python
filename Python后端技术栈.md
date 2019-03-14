@@ -629,5 +629,139 @@ def test():
     assert binary_search([], 1) == -1
 ```
 
+## Python基础练习题
 
+### Python深拷贝与浅拷贝
 
+* 什么是深拷贝？什么是浅拷贝？
+* Python中如何实现深拷贝？
+* 思考：Python中如何正确初始化一个二维数组？
+
+```python
+import copy
+
+l1 = [1, 2, 3]
+l2 = l1
+l3 = copy.copy(l1)
+l4 = copy.deepcopy(l1)
+print(l1, l2, l3, l4)
+'''
+[1, 2, 3] [1, 2, 3] [1, 2, 3] [1, 2, 3]
+'''
+l2[0] = 666
+print(l1, l2, l3, l4)
+'''
+[666, 2, 3] [666, 2, 3] [1, 2, 3] [1, 2, 3]
+'''
+l3[0] = 888
+print(l1, l2, l3, l4)
+'''
+[666, 2, 3] [666, 2, 3] [888, 2, 3] [1, 2, 3]
+'''
+l4[0] = 999
+print(l1, l2, l3, l4)
+'''
+[666, 2, 3] [666, 2, 3] [888, 2, 3] [999, 2, 3]
+'''
+```
+
+## Python内置数据结构和算法常考
+
+| 数据结构/算法 | 语言内置                  | 内置库                                            |
+| ------------- | ------------------------- | ------------------------------------------------- |
+| 线性结构      | list、tuple               | array(数组，不常用)/collections.namedtuple        |
+| 链式结构      |                           | collections.deque(双端队列)                       |
+| 字典结构      | dict                      | collections.Counter(计数器)/OrderedDict(有序字典) |
+| 集合结构      | set/frozenset(不可变集合) |                                                   |
+| 排序算法      | sorted                    |                                                   |
+| 二分算法      |                           | bisect模块                                        |
+| 堆算法        |                           | heapq模块                                         |
+| 缓存算法      |                           | functools.lru_cache(Least Recent Used, python3)   |
+
+### collections模块提供了一些内置数据结构的扩展
+
+* namedtuple
+
+```python
+import collections
+
+Point = collections.namedtuple('Point', 'x, y')
+p = Point(1, 2)
+print(p.x)
+'''
+1
+'''
+print(p.y)
+'''
+2
+'''
+print(p.x == p[0])
+'''
+True
+'''
+```
+
+* deque
+
+```python
+import collections
+
+de = collections.deque()
+de.append(1)
+de.appendleft(0)
+print(de)
+'''
+deque([0, 1])
+'''
+de.pop()
+'''
+1
+'''
+de.popleft()
+'''
+0
+'''
+print(de)
+'''
+deque([])
+'''
+```
+
+* Counter
+* OrderedDict(使用循环双端链表保存key的顺序)
+* defaultdict
+
+### Python dict底层结构
+
+* dict底层使用哈希表
+  * 为了支持快速查找使用了哈希表作为底层结构
+  * 哈希表平均查找时间复杂度O(1)
+  * Cpython解释器使用二次探查解决哈希冲突问题
+
+### Python list/tuple区别
+
+* 都是线性结构，支持下标访问
+* list是可变对象，tuple保存的引用不可变
+
+```python
+t = [1,2], 1, 2
+t[0].append(3)
+print(t)
+'''
+([1, 2, 3], 1, 2)
+'''
+```
+
+* list无法作为字典的key，tuple可以（可变对象不可hash）
+
+### 什么是LRUCache？
+
+* Least-Recently-Used替换掉最近最少使用的对象
+  * 缓存剔除策略，当缓存空间不够用的时候需要一种方式剔除key
+  * 常见的有LRU, LFU等
+  * LRU通过使用一个循环双端队列不断的把最新访问的key放到表头实现
+
+* 字典用来缓存，循环双端链表用来记录访问顺序
+  * 利用Python内置的dict+collections.OrderedDict实现
+  * dict用来当做k/v键值对的缓存
+  * OrderedDict用来实现最新最近访问的key
