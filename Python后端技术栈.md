@@ -367,3 +367,111 @@ except MyException as e:
     print(e)
 ```
 
+## Python性能分析与优化，GIL常考题
+
+### 什么是Cpython GIL
+
+* GIL, Global Interpreter Lock
+* Cpython解释器的内存管理并不是线程安全的
+* 保护多线程情况下Python对象的访问
+* Cpython使用简单的锁机制避免多个线程同时执行字节码
+
+### GIL影响
+
+* 限制了程序的多核执行
+  * 同一时间只能有一个线程执行字节码
+  * CPU密集程序难以利用多核优势
+  * IO期间会释放GIL，对IO密集程序影响不大（爬虫，web）
+* ![](https://resource-1256956499.cos.ap-beijing.myqcloud.com/img/20190314112533.png)
+
+### 如何规避GIL影响
+
+* CPU密集可以使用多进程
+* IO密集可以使用多进程、协程
+* cython扩展
+
+![](https://resource-1256956499.cos.ap-beijing.myqcloud.com/img/20190314112754.png)
+
+### 问题
+
+```python
+import threading
+
+n = [0]
+
+def foo():
+    n[0] = n[0] + 1
+    n[0] = n[0] + 1
+    
+threads = []
+for i in range(50000):
+    t = threading.Thread(target=foo)
+    threads.append(t)
+    
+for t in threads:
+    t.start()
+    
+print(n)
+
+# 大多数情况下打印10000，偶尔打印9998，Python的多线程并不是绝对安全的
+```
+
+### 为什么有了GIL还要关注线程安全
+
+* Python中什么操作才是原子的？一步执行到位
+  * 一个操作如果是一个字节码指令可以执行完成的就是原子的
+  * 原子的是可以保证线程安全的
+  * 使用dis操作才分析字节码
+
+```python
+import dis
+
+def update_list(l):
+    # 原子操作，不用担心线程安全问题
+    l[0] = 1
+    
+dis.dis(update_list)
+'''
+  5           0 LOAD_CONST               1 (1)
+              2 LOAD_FAST                0 (l)
+              4 LOAD_CONST               2 (0)
+              6 STORE_SUBSCR             # 字节码操作，线程安全
+              8 LOAD_CONST               0 (None)
+             10 RETURN_VALUE
+'''
+
+def incr_list(l):
+    # 危险！不是原子操作
+    l[0] += 1
+   
+dis.dis(incr_list)
+'''
+  3           0 LOAD_FAST                0 (l)
+              2 LOAD_CONST               1 (0)
+              4 DUP_TOP_TWO
+              6 BINARY_SUBSCR
+              8 LOAD_CONST               2 (1)
+             10 INPLACE_ADD              # 需要多个字节码操作，有可能在线程执行过程中切到其他线程
+             12 ROT_THREE
+             14 STORE_SUBSCR
+             16 LOAD_CONST               0 (None)
+             18 RETURN_VALUE
+'''
+```
+
+### 如何剖析程序性能
+
+* 使用各种profile工具（内置或者第三方）
+  * 二八定律，大部分时间花费在少量代码上
+  * 内置的profile、cprofile等工具
+  * 使用pyflame（uber开源）的火焰图工具
+
+### 服务端性能优化措施
+
+* web应用一般语言不会成为瓶颈
+  * 数据结构和算法
+  * 数据库层：索引优化，慢查询消除，批量操作减少IO，NoSQL
+  * 网络IO：批量操作，pipeline操作减少IO
+  * 缓存：使用内存数据库redis/memcached
+  * 异步：asyncio，celery
+  * 并发：gevent/多线程
