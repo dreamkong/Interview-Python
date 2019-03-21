@@ -784,3 +784,109 @@ print(t)
 | 快速排序 | O(n^2)         | O(n*log2n)     | 不稳定 | O(log2n)~O(n) |
 | 堆排序   | O(n*log2n)     | O(n*log2n)     | 不稳定 | O(1)          |
 
+### 排序算法的稳定性
+
+* 相同大小的元素在排序之后依然保持相对位置不变，就是稳定的
+* `r[i]=r[j]`且`r[i]`在`r[j]`之前，排序之后`r[i]`依然在`r[j]`之前
+* 稳定性对于排序一个复杂结构，并且需要保持原有排序才有意义
+
+### 请写出快速排序
+
+* 快排经常问：分治法(divide and conquer)，快排三步走
+  * Partition：选择基准分割数组为两个子数组，小于基准和大于基准的
+  * 对两个子数组分别快排
+  * 合并结果
+
+```python
+def quicksort(array):
+  # 递归出口
+  if len(array) < 2:
+    return array
+  else:
+    pivot_index = 0
+    pivot = array[pivot_index]
+    less_part = [i for i in array[pivot_index+1:] if i <= pivot]
+    great_part = [i for i in array[pivot_index+1:] if i > pivot]
+    return quicksort(less_part) + [pivot] + quicksort(great_part)
+ 
+def test_quicksort():
+    import random
+    l = list(range(10))
+    random.shuffle(l)
+    print('排序前：', l)
+    res = quicksort(l)
+    print('排序后：', res)
+    assert res == sorted(l)
+```
+
+### 合并两个有序数组
+
+* 要求m+n复杂度内
+
+```python
+def merge_sorted_list(sorted_a, sorted_b):
+    len_a, len_b = len(sorted_a), len(sorted_b)
+    a = b = 0
+    res = []
+    while a < len_a and b < len_b:
+        if sorted_a[a] < sorted_b[b]:
+            res.append(sorted_a[a])
+            a += 1
+        else:
+            res.append(sorted_b[b])
+            b += 1
+    if a < len_a:
+        res.extend(sorted_a[a:])
+    else:
+        res.extend(sorted_b[b:])
+    return res
+
+res = merge_sorted_list([0,3,6,7],[0, 0, 23,33])
+print(res)
+```
+
+### 归并排序
+
+```python
+def mergesort(array):
+    # 递归出口
+    if len(array) <= 1:
+        return array
+    else:
+        mid = int(len(array)/2)
+        left_half = mergesort(array[:mid])
+        right_half = mergesort(array[mid:])
+        return merge_sorted_list(left_half, right_half)
+```
+
+### 堆排序
+
+```python
+# 借助heapq模块
+def heapsort_use_heapq(iterable):
+    from heapq import heappush, heappop
+    items = []
+    for value in iterable:
+        heappush(items, value)
+    return [heappop(items) for i in range(len(items))]
+```
+
+### 二分查找
+
+```python
+def binary_search(sorted_array, val):
+    if not sorted_array:
+        return -1
+    start = 0
+    end = len(sorted_array) - 1
+    while start <= end:
+        mid = start + ((end - start) >> 2)
+        if sorted_array[mid] == val:
+            return mid
+        elif sorted_array[mid] > val:
+            end = mid - 1
+        else:
+            start = mid + 1
+    return -1
+```
+
