@@ -766,7 +766,7 @@ print(t)
   * dict用来当做k/v键值对的缓存
   * OrderedDict用来实现最新最近访问的key
 
-## Python算法常考
+## Python常考算法
 
 ### 排序+查找，重中之重
 
@@ -888,5 +888,194 @@ def binary_search(sorted_array, val):
         else:
             start = mid + 1
     return -1
+```
+
+## Python常考数据结构
+
+### Python web后端常考数据结构
+
+* 常见的数据结构链表、队列、栈、二叉树、堆
+* 使用内置的结构实现高级数据结构，比如内置的list/deque实现栈
+* LeetCode或者剑指Offer上的常考题
+
+### 链表
+
+**链表有单链表、双链表、循环双端链表**
+
+* 如何使用Python来表示链表结构
+
+* 实现链表常见操作，比如插入节点，反转链表，合并多个链表等
+
+* LeetCode练习常见链表题目
+
+  * 206翻转链表
+
+    ```python
+    class ListNode:
+        def __init__(self, x):
+            self.val = x
+            self.next = None
+            
+    class Solution:
+        def reverseList(self, head):
+            '''
+            :type head: ListNode
+            :rtype ListNode
+            '''
+            pre, cur = None, head
+            while cur:
+                cur.next, pre, cur = pre, cur, cur.next
+            return pre
+    ```
+
+### 队列
+
+**队列（queue）是先进先出结构**
+
+* 如何使用Python实现队列？
+* 实现队列的append和pop操作，如何做到先进先出
+* 使用collections.deque实现队列
+
+```python
+from collections import deque
+
+class Queue:
+    def __init__(self):
+        self.items = deque()
+        
+    def append(self, val):
+        return self.items.append(val)
+        
+    def pop(self):
+        return self.items.popleft()
+    
+    def empty(self):
+        return len(self.items) == 0
+```
+
+### 栈
+
+* 如何使用Python实现栈？
+* 实现栈的push和pop操作，如何做到先进后出
+* 使用collections.deque实现队列
+
+```python
+from collections import deque
+
+class Stack:
+    def __init__(self):
+        self.itmes = deque()
+      
+    def push(self, val):
+        self.items.append(val)
+        
+    def pop(self, val):
+        return self.items.pop()
+      
+    def empty(self):
+        return len(self.items) == 0
+```
+
+### 字典与集合
+
+**Python dict/set底层都是哈希表**
+
+* 哈希表的实现原理，底层其实就是一个数组
+* 根据哈希函数快速定位一个元素，平均查找O(1)
+* 不断加入元素会引起哈希表重新开辟空间，拷贝之前的元素到新数组
+
+**哈希表如何解决冲突**
+
+* 链接法
+  * 元素key冲突之后使用一个链表填充相同key的元素
+* 开放寻址法
+  * 冲突之后根据一种方式(二次探查)寻找下一个可用的槽
+* cpython使用的二次探查
+
+### 二叉树
+
+**先序、中序、后序**
+
+* 先序 根左右
+* 中序 左根右
+* 后序 左右根
+
+```python
+class BinTreeNode:
+    def __init__(self, data, left=None, right=None):
+        self.data = data
+        self.left = left
+        self.right = right
+        
+    def BinTree:
+        def __init__(self, root=None):
+            self.root = root
+            
+        def preorder_trav(self, subtree):
+            '''先序'''
+            if subtree is not None:
+                print(subtree.data)
+                self.preorder_trav(subtree.left)
+                self.preorder_trav(subtree.right)
+                
+        def inorder_trav(self, subtree):
+            if subtree is not None:
+                self.inorder_trav(subtree.left)
+                print(subtree.data)
+                self.inorder_trav(subtree.right)
+                
+        def lastorder_trav(self, subtree):
+            if subtree is not None:
+                self.lastorder_trav(subtree.left)
+                self.lastorder_trav(subtree.right)
+                print(subtree.data)
+```
+
+### 堆
+
+**堆其实是完全二叉树，有最大堆和最小堆**
+
+* 最大堆：对于每个非叶子节点V，V的值都比它的两个孩子大
+* 最小堆：对于每个非叶子节点V，V的值都比它的两个孩子小
+* 最大堆支持每次pop操作获取最大的元素，最小堆获取最小元素
+* 常见问题：用堆完成topK问题，从海量数字中寻找最大的K个
+
+```python
+import heapq
+
+class TopK:
+    '''
+    获取大量元素topK大个元素，固定内存
+    思路：
+    1. 先放入元素前k个建立一个最小堆
+    2. 迭代剩余元素：
+  	   如果当前元素小于堆顶元素，跳过该元素(肯定不是前k大)
+  	   否则替换堆顶元素为当前元素，并重新调整堆
+    '''
+    def __init__(self, iterable, k):
+        self.miniheap = []
+        self.capacity = k
+        self.iterable = iterable
+        
+    def push(self, val):
+        if len(self.miniheap) >= self.capacity:
+            min_val = self.miniheap[0]
+            if val > min_val:
+                heapq.heapreplace(self.miniheap, val)
+        else:
+            self.miniheap.append(val)
+            
+    def get_topk(self):
+        for val in self.iterable:
+            self.push(val)
+        return self.miniheap
+      
+if __name__ == '__main__':
+    import random
+    l = list(range(10))
+    random.shuffle(l)
+    topk = TopK(l, 3)
+    res = topk.get_topk()
+    print(res)
 ```
 
