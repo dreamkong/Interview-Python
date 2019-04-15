@@ -908,7 +908,7 @@ def binary_search(sorted_array, val):
 
 * LeetCode练习常见链表题目
 
-  * 206翻转链表
+  * 206反转链表
 
     ```python
     class ListNode:
@@ -1427,4 +1427,89 @@ if __name__ == '__main__':
 
     
 
-## 
+## 算法与数据结构练习题
+
+### 反转链表
+
+**链表在面试中是一个高频考点**
+
+* 如何反转一个单链表
+* 能否用循环的方式实现吗？
+* 能否用递归的方式实现吗？
+
+## 面向对象基础及Python类常考问题
+
+### 什么是面向对象编程
+
+**Object Oriented Programming（OOP）**
+
+* 把对象作为基本单元，把对象抽象成类(Class)，包含成员和方法
+* 数据封装、继承、多态
+* Python中使用类来实现。过程式编程(函数)，OOP(类)
+
+### Python中如何创建类？
+
+```python
+class Person(object): # py3可以省略object直接写作 class Person:
+    def __init__(self, name, age):
+        self.name = name
+        self.age = age 
+        
+    def print_name(self):
+      print('my name is {}'.format(self.name))
+```
+
+### 组合与继承
+
+**优先使用组合而非继承**
+
+* 组合是使用其他的类实例作为自己的一个属性(Has-a 关系)
+* 子类继承父类的属性和方法(Is a 关系)
+* 优先使用组合保持代码简单
+
+### 类变量和实例变量的区别
+
+**区分类变量和实例变量**
+
+* 类变量由所有实例共享
+* 实例变量由实例单独享有，不同实例之间不影响
+* 当我们需要一个类的不同实例之间共享变量的时候使用类变量
+
+### classmethod和staticmethod区别
+
+**classmethod vs staticmethod**
+
+* 都可以通过Class.method()方式使用
+* classmethod第一个参数是cls，可以引用类变量
+* staticmethod使用起来和普通函数一样，只不过放在类里
+
+### 什么是元类？使用场景
+
+**元类（Meta Class）是创建类的类**
+
+* 元类允许我们控制类的生成，比如修改类的属性等
+* 使用type来定义元类
+* 元类最常见的一个使用场景就是ORM框架
+
+```python
+# 元类继承自type
+class LowercaseMeta(type):
+    '''修改类的属性名称为小写的元类'''
+    def __new__(mcs, name, bases, attrs):
+        lower_attrs = {}
+        for k, v in attrs.items():
+            if not k.startswith('__'):
+                lower_attrs[k.lower()] = v
+            else:
+                lower_attrs[k] = v
+        return type.__new__(mcs, name, bases, lower_attrs)
+     
+class LowercaseClass(metaclass=LowercaseMeta):
+    BAR = True
+    
+    def Hello(self):
+        print('hello')
+        
+print(dir(LowercaseClass))
+```
+
