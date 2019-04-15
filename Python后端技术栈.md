@@ -1112,3 +1112,70 @@ if __name__ == '__main__':
 * 把LeetCode上常见分类题目刷一遍(GitHub搜LeetCode分类)
 * 常见排序算法和数据结构可以手写
 
+## Python常考数据结构之链表
+
+### 链表
+
+**链表涉及指针操作较为复杂，容易出错，经常用作考题**
+
+* 熟悉链表的定义和常见操作
+
+* 常考题：删除一个链表节点
+
+  * LeetCode237
+
+    ```python
+    # Definition for singly-linked list.
+    # class ListNode:
+    #     def __init__(self, x):
+    #         self.val = x
+    #         self.next = None
+    
+    class Solution:
+        def deleteNode(self, node):
+            """
+            :type node: ListNode
+            :rtype: void Do not return anything, modify node in-place instead.
+            """
+            node.val = node.next.val
+            node.next = node.next.next
+    ```
+
+
+
+* 常考题：合并两个有序链表
+
+  * LeetCode21
+
+    ```python
+    # Definition for singly-linked list.
+    # class ListNode:
+    #     def __init__(self, x):
+    #         self.val = x
+    #         self.next = None
+    
+    class Solution:
+        def mergeTwoLists(self, l1: ListNode, l2: ListNode) -> ListNode:
+            res = ListNode(0)
+            if l1 is None:
+                return l2
+            if l2 is None:
+                return l1
+            if l1.val < l2.val:
+                res = l1
+                res.next = self.mergeTwoLists(l1.next, l2)
+            else:
+                res = l2
+                res.next = self.mergeTwoLists(l1, l2.next)
+            return res
+    ```
+
+    
+
+### 多写多练
+
+**找到相关的题目，多做一些练习**
+
+* 一般一次很难写对
+* 尝试自己先思考，先按照自己的方式写代码，提交后发现问题
+* 如果实在没有思路可以先去看其他人的题解
