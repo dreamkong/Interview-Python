@@ -1331,4 +1331,49 @@ if __name__ == '__main__':
     # param_4 = obj.empty()
     ```
 
-    
+## Python常考数据结构之堆
+
+### 堆
+
+**堆的常考题基本围绕在合并多个有序（数组/链表）、TopK问题**
+
+* 理解堆的概念，堆是完全二叉树，有最大堆和最小堆
+
+* 会使用Python内置的heapq模块实现堆的操作
+
+* 常考题：合并k个有序链表
+
+  * LeetCode23
+
+  ```python
+  # Definition for singly-linked list.
+  # class ListNode:
+  #     def __init__(self, x):
+  #         self.val = x
+  #         self.next = None
+  
+  class Solution:
+      def mergeKLists(self, lists: List[ListNode]) -> ListNode:
+          # 读取所有节点
+          h = []
+          for node in lists:
+              while node:
+                  h.append(node.val)
+                  node = node.next
+          if not h:
+              return
+          # 构造一个最小堆
+          from heapq import heapify, heappop
+          # 转换成最小堆
+          heapify(h)
+          # 构造链表
+          root = ListNode(heappop(h))
+          curnode = root
+          while h:
+              nextnode = ListNode(heappop(h))
+              curnode.next = nextnode
+              curnode = nextnode
+          return root
+  ```
+
+  
