@@ -1513,3 +1513,82 @@ class LowercaseClass(metaclass=LowercaseMeta):
 print(dir(LowercaseClass))
 ```
 
+## Python装饰器常见问题
+
+### Decorator
+
+* Python中一切皆对象，函数也可以当做参数传递
+* 装饰器是接受函数作为参数，添加功能后返回一个新函数的函数(类)
+* Python中通过@使用装饰器
+
+### 编写一个计算耗时的装饰器
+
+```python
+import time
+
+def log_time(func):
+    def wrapper(*args, **kwargs):
+        start = time.time()
+        res = func(*args, **kwargs)
+        print('use time:{}'.format(time.time()-start))
+        return 
+    return wrapper
+ 
+@log_time
+def mysleep():
+    time.sleep(1)
+    
+mysleep()
+```
+
+### 如何使用类编写装饰器？
+
+```python
+import time
+
+class LogTime:
+    def __call__(self, func):
+        def wrapper(*args, **kwargs):
+            start = time.time()
+            res = func(*args, **kwargs)
+            print('use time. {}'.format(time.time()-start))
+            return res
+        return wrapper
+      
+      
+@LogTime()
+def mysleep2():
+    time.sleep(1)
+    
+mysleep2()
+```
+
+### 如何给装饰器增加参数？
+
+**使用类装饰器比较方便实现装饰器参数**
+
+```python
+import time
+
+class LogTimeParams:
+  def __init__(self, use_int=False):
+      self.use_int = use_int
+      
+  def __call__(self, func):
+      def wrapper(*args, **kwargs):
+          start = time.time()
+          res = func(*args, **kwargs)
+          if self.use_int:
+              print('use time: {}'.format(int(time.time()-start)))
+          else:
+              print('use time: {}'.format(time.time()-start))
+          return res
+      return wrapper
+    
+@LogTimeParams(True)
+def mysleep3():
+    time.sleep(1)
+    
+mysleep3()
+```
+
