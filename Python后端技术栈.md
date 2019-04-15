@@ -1245,4 +1245,90 @@ if __name__ == '__main__':
             return res
     ```
 
+## Python常考数据结构之栈和队列
+
+### 栈和队列
+
+**后进先出（栈）vs 先进先出（队列）**
+
+* 熟练掌握用Python的list或者collections.deque()实现栈和队列
+
+* 常考题：用栈实现队列
+
+  * LeetCode232
+
+    ```python
+    class Stack:
+        def __init__(self):
+            self.stack = []
+            
+        def push(self, x: int) -> None:
+            self.stack.append(x)
+            
+        def pop(self):
+            return self.stack.pop()
+        
+        def top(self):
+            return self.stack[-1]
+        
+        def empty(self):
+            return self.stack == []
+        
+    class MyQueue:
+    
+        def __init__(self):
+            """
+            Initialize your data structure here.
+            """
+            self.s1 = Stack()
+            self.s2 = Stack()
+            
+    
+        def push(self, x: int) -> None:
+            """
+            Push element x to the back of queue.
+            """
+            self.s1.push(x)
+            
+    
+        def pop(self) -> int:
+            """
+            Removes the element from in front of queue and returns that element.
+            """
+            if not self.s2.empty():
+                return self.s2.pop()
+            
+            while not self.s1.empty():
+                self.s2.push(self.s1.pop())
+            return self.s2.pop()
+            
+    
+        def peek(self) -> int:
+            """
+            Get the front element.
+            """
+            if not self.s2.empty():
+                return self.s2.top()
+            
+            while not self.s1.empty():
+                self.s2.push(self.s1.pop())
+            return self.s2.top()
+            
+    
+        def empty(self) -> bool:
+            """
+            Returns whether the queue is empty.
+            """
+            return self.s1.empty() and self.s2.empty()
+            
+    
+    
+    # Your MyQueue object will be instantiated and called as such:
+    # obj = MyQueue()
+    # obj.push(x)
+    # param_2 = obj.pop()
+    # param_3 = obj.peek()
+    # param_4 = obj.empty()
+    ```
+
     
