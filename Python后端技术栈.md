@@ -1377,3 +1377,54 @@ if __name__ == '__main__':
   ```
 
   
+
+## Python常考数据结构之字符串
+
+### 字符串
+
+**了解字符串的常用操作**
+
+* Python内置了很多字符串操作，例如split、strip、upper、replace等
+
+* 常考题：翻转一个字符串
+
+  * LeetCode344
+
+    ```python
+    class Solution:
+        def reverseString(self, s: List[str]) -> None:
+            """
+            Do not return anything, modify s in-place instead.
+            """
+            start, end = 0, len(s)-1
+            while start < end:
+                s[start], s[end] = s[end], s[start]
+                start += 1
+                end -= 1
+    ```
+
+    
+
+* 常考题：判断一个字符串是否为回文
+
+  * LeetCode9
+
+    ```python
+    class Solution:
+        def isPalindrome(self, x: int) -> bool:
+            if x < 0:
+                return False
+            s = str(x)
+            start, end = 0, len(s)-1
+            while start < end:
+                if s[start] == s[end]:
+                    start += 1
+                    end -= 1
+                else:
+                    return False
+            return True
+    ```
+
+    
+
+## 
