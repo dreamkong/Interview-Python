@@ -1179,3 +1179,70 @@ if __name__ == '__main__':
 * 一般一次很难写对
 * 尝试自己先思考，先按照自己的方式写代码，提交后发现问题
 * 如果实在没有思路可以先去看其他人的题解
+
+## Python常考数据结构之二叉树
+
+### 二叉树
+
+**二叉树涉及到递归和指针操作，常结合递归考察**
+
+* 二叉树的操作很多可以用递归的方式解决，不了解递归会比较吃力
+
+* 常考题：二叉树的镜像(反转二叉树)
+
+  * LeetCode226
+
+    ```python
+    # Definition for a binary tree node.
+    # class TreeNode:
+    #     def __init__(self, x):
+    #         self.val = x
+    #         self.left = None
+    #         self.right = None
+    
+    class Solution:
+        def invertTree(self, root: TreeNode) -> TreeNode:
+            if root:
+                root.left, root.right = root.right, root.left
+                self.invertTree(root.left)
+                self.invertTree(root.right)
+            return root
+    ```
+
+* 常考题：如何层序遍历二叉树(广度优先)
+  * LeetCode102
+
+    ```python
+    # Definition for a binary tree node.
+    # class TreeNode:
+    #     def __init__(self, x):
+    #         self.val = x
+    #         self.left = None
+    #         self.right = None
+    
+    class Solution:
+        def levelOrder(self, root):
+            """
+            :type root: TreeNode
+            :rtype: List[List[int]]
+            """
+            if not root:
+                return []
+            res = []
+            cur_nodes = [root]
+            next_nodes = []
+            res.append([i.val for i in cur_nodes])
+            while cur_nodes or next_nodes:
+                for node in cur_nodes:
+                   if node.left:
+                       next_nodes.append(node.left)
+                   if node.right:
+                       next_nodes.append(node.right)
+                if next_nodes:
+                    res.append([i.val for i in next_nodes])
+                cur_nodes = next_nodes
+                next_nodes = []
+            return res
+    ```
+
+    
