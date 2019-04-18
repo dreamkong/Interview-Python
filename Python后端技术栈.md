@@ -2029,3 +2029,35 @@ def f(n):
     return f(n - 1) + f(n - 2)
 ```
 
+## 编程范式与设计模式练习题
+
+### 单例模式
+
+**单例模式有多种方式来实现**
+
+* 之前我们使用过`__new__`的方式实现了单例模式
+* 你能使用类装饰器来完成单例模式吗？
+* Tip：装饰器既可以接受一个函数，也可以是一个类(都是对象)
+
+```python
+def singleton(cls, *args, **kwargs):
+    _instance = {}
+    
+    def _():
+        if cls in _instance:
+            return _instance[cls]
+        else:
+            _instance[cls] = cls(*args, **kwargs)
+        return _instance[cls]
+    return _
+    
+
+@singleton
+class MyClass:
+    pass
+  
+c1 = MyClass()
+c2 = MyClass()
+assert c1 is c2 # 单例的，c1 c2是同一个实例
+```
+
