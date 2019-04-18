@@ -908,25 +908,25 @@ def binary_search(sorted_array, val):
 
 * LeetCode练习常见链表题目
 
-  * 206反转链表
+    * 206反转链表
 
-    ```python
-    class ListNode:
-        def __init__(self, x):
-            self.val = x
-            self.next = None
-            
-    class Solution:
-        def reverseList(self, head):
-            '''
-            :type head: ListNode
-            :rtype ListNode
-            '''
-            pre, cur = None, head
-            while cur:
-                cur.next, pre, cur = pre, cur, cur.next
-            return pre
-    ```
+        ```python
+        class ListNode:
+            def __init__(self, x):
+                self.val = x
+                self.next = None
+                
+        class Solution:
+            def reverseList(self, head):
+                '''
+                :type head: ListNode
+                :rtype ListNode
+                '''
+                pre, cur = None, head
+                while cur:
+                    cur.next, pre, cur = pre, cur, cur.next
+                return pre
+        ```
 
 ### 队列
 
@@ -987,9 +987,9 @@ class Stack:
 **哈希表如何解决冲突**
 
 * 链接法
-  * 元素key冲突之后使用一个链表填充相同key的元素
+    * 元素key冲突之后使用一个链表填充相同key的元素
 * 开放寻址法
-  * 冲突之后根据一种方式(二次探查)寻找下一个可用的槽
+    * 冲突之后根据一种方式(二次探查)寻找下一个可用的槽
 * cpython使用的二次探查
 
 ### 二叉树
@@ -1122,55 +1122,55 @@ if __name__ == '__main__':
 
 * 常考题：删除一个链表节点
 
-  * LeetCode237
+    * LeetCode237
 
-    ```python
-    # Definition for singly-linked list.
-    # class ListNode:
-    #     def __init__(self, x):
-    #         self.val = x
-    #         self.next = None
-    
-    class Solution:
-        def deleteNode(self, node):
-            """
-            :type node: ListNode
-            :rtype: void Do not return anything, modify node in-place instead.
-            """
-            node.val = node.next.val
-            node.next = node.next.next
-    ```
+        ```python
+        # Definition for singly-linked list.
+        # class ListNode:
+        #     def __init__(self, x):
+        #         self.val = x
+        #         self.next = None
+        
+        class Solution:
+            def deleteNode(self, node):
+                """
+                :type node: ListNode
+                :rtype: void Do not return anything, modify node in-place instead.
+                """
+                node.val = node.next.val
+                node.next = node.next.next
+        ```
 
 
 
 * 常考题：合并两个有序链表
 
-  * LeetCode21
+    * LeetCode21
 
-    ```python
-    # Definition for singly-linked list.
-    # class ListNode:
-    #     def __init__(self, x):
-    #         self.val = x
-    #         self.next = None
-    
-    class Solution:
-        def mergeTwoLists(self, l1: ListNode, l2: ListNode) -> ListNode:
-            res = ListNode(0)
-            if l1 is None:
-                return l2
-            if l2 is None:
-                return l1
-            if l1.val < l2.val:
-                res = l1
-                res.next = self.mergeTwoLists(l1.next, l2)
-            else:
-                res = l2
-                res.next = self.mergeTwoLists(l1, l2.next)
-            return res
-    ```
+        ```python
+        # Definition for singly-linked list.
+        # class ListNode:
+        #     def __init__(self, x):
+        #         self.val = x
+        #         self.next = None
+        
+        class Solution:
+            def mergeTwoLists(self, l1: ListNode, l2: ListNode) -> ListNode:
+                res = ListNode(0)
+                if l1 is None:
+                    return l2
+                if l2 is None:
+                    return l1
+                if l1.val < l2.val:
+                    res = l1
+                    res.next = self.mergeTwoLists(l1.next, l2)
+                else:
+                    res = l2
+                    res.next = self.mergeTwoLists(l1, l2.next)
+                return res
+        ```
 
-    
+        
 
 ### 多写多练
 
@@ -1190,60 +1190,60 @@ if __name__ == '__main__':
 
 * 常考题：二叉树的镜像(反转二叉树)
 
-  * LeetCode226
+    * LeetCode226
 
-    ```python
-    # Definition for a binary tree node.
-    # class TreeNode:
-    #     def __init__(self, x):
-    #         self.val = x
-    #         self.left = None
-    #         self.right = None
-    
-    class Solution:
-        def invertTree(self, root: TreeNode) -> TreeNode:
-            if root:
-                root.left, root.right = root.right, root.left
-                self.invertTree(root.left)
-                self.invertTree(root.right)
-            return root
-    ```
+        ```python
+        # Definition for a binary tree node.
+        # class TreeNode:
+        #     def __init__(self, x):
+        #         self.val = x
+        #         self.left = None
+        #         self.right = None
+        
+        class Solution:
+            def invertTree(self, root: TreeNode) -> TreeNode:
+                if root:
+                    root.left, root.right = root.right, root.left
+                    self.invertTree(root.left)
+                    self.invertTree(root.right)
+                return root
+        ```
 
 * 常考题：如何层序遍历二叉树(广度优先)
-  * LeetCode102
+    * LeetCode102
 
-    ```python
-    # Definition for a binary tree node.
-    # class TreeNode:
-    #     def __init__(self, x):
-    #         self.val = x
-    #         self.left = None
-    #         self.right = None
-    
-    class Solution:
-        def levelOrder(self, root):
-            """
-            :type root: TreeNode
-            :rtype: List[List[int]]
-            """
-            if not root:
-                return []
-            res = []
-            cur_nodes = [root]
-            next_nodes = []
-            res.append([i.val for i in cur_nodes])
-            while cur_nodes or next_nodes:
-                for node in cur_nodes:
-                   if node.left:
-                       next_nodes.append(node.left)
-                   if node.right:
-                       next_nodes.append(node.right)
-                if next_nodes:
-                    res.append([i.val for i in next_nodes])
-                cur_nodes = next_nodes
+        ```python
+        # Definition for a binary tree node.
+        # class TreeNode:
+        #     def __init__(self, x):
+        #         self.val = x
+        #         self.left = None
+        #         self.right = None
+        
+        class Solution:
+            def levelOrder(self, root):
+                """
+                :type root: TreeNode
+                :rtype: List[List[int]]
+                """
+                if not root:
+                    return []
+                res = []
+                cur_nodes = [root]
                 next_nodes = []
-            return res
-    ```
+                res.append([i.val for i in cur_nodes])
+                while cur_nodes or next_nodes:
+                    for node in cur_nodes:
+                       if node.left:
+                           next_nodes.append(node.left)
+                       if node.right:
+                           next_nodes.append(node.right)
+                    if next_nodes:
+                        res.append([i.val for i in next_nodes])
+                    cur_nodes = next_nodes
+                    next_nodes = []
+                return res
+        ```
 
 ## Python常考数据结构之栈和队列
 
@@ -1255,81 +1255,81 @@ if __name__ == '__main__':
 
 * 常考题：用栈实现队列
 
-  * LeetCode232
+    * LeetCode232
 
-    ```python
-    class Stack:
-        def __init__(self):
-            self.stack = []
+        ```python
+        class Stack:
+            def __init__(self):
+                self.stack = []
+                
+            def push(self, x: int) -> None:
+                self.stack.append(x)
+                
+            def pop(self):
+                return self.stack.pop()
             
-        def push(self, x: int) -> None:
-            self.stack.append(x)
+            def top(self):
+                return self.stack[-1]
             
-        def pop(self):
-            return self.stack.pop()
+            def empty(self):
+                return self.stack == []
+            
+        class MyQueue:
         
-        def top(self):
-            return self.stack[-1]
+            def __init__(self):
+                """
+                Initialize your data structure here.
+                """
+                self.s1 = Stack()
+                self.s2 = Stack()
+                
         
-        def empty(self):
-            return self.stack == []
+            def push(self, x: int) -> None:
+                """
+                Push element x to the back of queue.
+                """
+                self.s1.push(x)
+                
         
-    class MyQueue:
-    
-        def __init__(self):
-            """
-            Initialize your data structure here.
-            """
-            self.s1 = Stack()
-            self.s2 = Stack()
-            
-    
-        def push(self, x: int) -> None:
-            """
-            Push element x to the back of queue.
-            """
-            self.s1.push(x)
-            
-    
-        def pop(self) -> int:
-            """
-            Removes the element from in front of queue and returns that element.
-            """
-            if not self.s2.empty():
+            def pop(self) -> int:
+                """
+                Removes the element from in front of queue and returns that element.
+                """
+                if not self.s2.empty():
+                    return self.s2.pop()
+                
+                while not self.s1.empty():
+                    self.s2.push(self.s1.pop())
                 return self.s2.pop()
-            
-            while not self.s1.empty():
-                self.s2.push(self.s1.pop())
-            return self.s2.pop()
-            
-    
-        def peek(self) -> int:
-            """
-            Get the front element.
-            """
-            if not self.s2.empty():
+                
+        
+            def peek(self) -> int:
+                """
+                Get the front element.
+                """
+                if not self.s2.empty():
+                    return self.s2.top()
+                
+                while not self.s1.empty():
+                    self.s2.push(self.s1.pop())
                 return self.s2.top()
-            
-            while not self.s1.empty():
-                self.s2.push(self.s1.pop())
-            return self.s2.top()
-            
-    
-        def empty(self) -> bool:
-            """
-            Returns whether the queue is empty.
-            """
-            return self.s1.empty() and self.s2.empty()
-            
-    
-    
-    # Your MyQueue object will be instantiated and called as such:
-    # obj = MyQueue()
-    # obj.push(x)
-    # param_2 = obj.pop()
-    # param_3 = obj.peek()
-    # param_4 = obj.empty()
-    ```
+                
+        
+            def empty(self) -> bool:
+                """
+                Returns whether the queue is empty.
+                """
+                return self.s1.empty() and self.s2.empty()
+                
+        
+        
+        # Your MyQueue object will be instantiated and called as such:
+        # obj = MyQueue()
+        # obj.push(x)
+        # param_2 = obj.pop()
+        # param_3 = obj.peek()
+        # param_4 = obj.empty()
+        ```
 
 ## Python常考数据结构之堆
 
@@ -1343,40 +1343,40 @@ if __name__ == '__main__':
 
 * 常考题：合并k个有序链表
 
-  * LeetCode23
+    * LeetCode23
 
-  ```python
-  # Definition for singly-linked list.
-  # class ListNode:
-  #     def __init__(self, x):
-  #         self.val = x
-  #         self.next = None
-  
-  class Solution:
-      def mergeKLists(self, lists: List[ListNode]) -> ListNode:
-          # 读取所有节点
-          h = []
-          for node in lists:
-              while node:
-                  h.append(node.val)
-                  node = node.next
-          if not h:
-              return
-          # 构造一个最小堆
-          from heapq import heapify, heappop
-          # 转换成最小堆
-          heapify(h)
-          # 构造链表
-          root = ListNode(heappop(h))
-          curnode = root
-          while h:
-              nextnode = ListNode(heappop(h))
-              curnode.next = nextnode
-              curnode = nextnode
-          return root
-  ```
+    ```python
+    # Definition for singly-linked list.
+    # class ListNode:
+    #     def __init__(self, x):
+    #         self.val = x
+    #         self.next = None
+    
+    class Solution:
+        def mergeKLists(self, lists: List[ListNode]) -> ListNode:
+            # 读取所有节点
+            h = []
+            for node in lists:
+                while node:
+                    h.append(node.val)
+                    node = node.next
+            if not h:
+                return
+            # 构造一个最小堆
+            from heapq import heapify, heappop
+            # 转换成最小堆
+            heapify(h)
+            # 构造链表
+            root = ListNode(heappop(h))
+            curnode = root
+            while h:
+                nextnode = ListNode(heappop(h))
+                curnode.next = nextnode
+                curnode = nextnode
+            return root
+    ```
 
-  
+    
 
 ## Python常考数据结构之字符串
 
@@ -1388,44 +1388,44 @@ if __name__ == '__main__':
 
 * 常考题：翻转一个字符串
 
-  * LeetCode344
+    * LeetCode344
 
-    ```python
-    class Solution:
-        def reverseString(self, s: List[str]) -> None:
-            """
-            Do not return anything, modify s in-place instead.
-            """
-            start, end = 0, len(s)-1
-            while start < end:
-                s[start], s[end] = s[end], s[start]
-                start += 1
-                end -= 1
-    ```
+        ```python
+        class Solution:
+            def reverseString(self, s: List[str]) -> None:
+                """
+                Do not return anything, modify s in-place instead.
+                """
+                start, end = 0, len(s)-1
+                while start < end:
+                    s[start], s[end] = s[end], s[start]
+                    start += 1
+                    end -= 1
+        ```
 
-    
+        
 
 * 常考题：判断一个字符串是否为回文
 
-  * LeetCode9
+    * LeetCode9
 
-    ```python
-    class Solution:
-        def isPalindrome(self, x: int) -> bool:
-            if x < 0:
-                return False
-            s = str(x)
-            start, end = 0, len(s)-1
-            while start < end:
-                if s[start] == s[end]:
-                    start += 1
-                    end -= 1
-                else:
+        ```python
+        class Solution:
+            def isPalindrome(self, x: int) -> bool:
+                if x < 0:
                     return False
-            return True
-    ```
+                s = str(x)
+                start, end = 0, len(s)-1
+                while start < end:
+                    if s[start] == s[end]:
+                        start += 1
+                        end -= 1
+                    else:
+                        return False
+                return True
+        ```
 
-    
+        
 
 ## 算法与数据结构练习题
 
@@ -1810,5 +1810,168 @@ cat = Cat()
 objects.append(Adapter(cat, make_noise=cat.meow))
 for obj in objects:
     print('A {0} goes {1}'.format(obj.name, obj.make_noise()))
+```
+
+## Python设计模式之行为型模式
+
+### 常见行为型设计模式
+
+* 迭代器模式(Iterator)：通过统一的接口迭代对象
+* 观察者模式(Observer)：对象发生改变的时候，观察者执行相应动作
+* 策略模式(Strategy)：针对不同规模输入使用不同的策略
+
+### 迭代器模式
+
+**什么是迭代器模式(Iterator)**
+
+* Python内置对迭代器模式的支持
+* 比如我们可以用for遍历各种Iterable的数据类型
+* Python里可以实现`__next__`和`__iter__`实现迭代器
+
+```python
+from collections import deque
+
+# 使用组合的例子
+class Stack:
+    
+    def __init__(self):
+    		self._deque = deque() # has a deque()
+        
+    def push(self, val):
+        return self._deque.append(val)
+    
+    def pop(self):
+        return self._deque.pop()
+      
+    def empty(self):
+        return len(self._deque) == 0
+
+    def __iter__(self):
+        res = []
+        for i in self._deque:
+            res.append(i)
+        for i in reversed(res):
+            yield i
+            
+            
+s = Stack()
+s.push(1)
+s.push(2)
+for i in s:
+    print(i)
+```
+
+### 观察者模式
+
+**什么是观察者模式(Observer)**
+
+* 发布订阅是一种最常用的实现方式
+* 发布订阅用于解耦逻辑
+* 可以通过回调等方式实现，当发生事件时，调用相应的回调函数
+
+```python
+# 发布订阅模式
+
+# 发布者
+class Publisher:
+    def __init__(self):
+        # 观察者
+        self.observers = []
+        
+    # 加入观察者
+    def add(self, observer):
+        if observer not in self.observers:
+            self.observers.append(observer)
+        else:
+            print('Failed to add: {}'.format(observer))
+     
+    # 移除观察者
+    def remove(self, observer):
+        try:
+            self.observers.remove(observer)
+        except ValueError:
+            print('Failed to remove: {}'.format(observer))
+            
+    # 调用观察者的回调
+    def notify(self):
+        [o.notify_by(self) for o in self.observers]
+        
+
+# 继承自发布者
+class Formatter(Publisher):
+    def __init__(self, name):
+        super().__init__()
+        self.name = name
+        self._data = 0
+       
+    @property
+    def data(self):
+        return self._data
+    
+    @data.setter
+    def data(self, new_value):
+        self._data = int(new_value)
+        # data在被合法赋值以后会执行notify
+        self.notify()
+        
+        
+class BinaryFormatter:
+    '''订阅者'''
+    
+    def notify_by(self, publisher):
+        print("{}: '{}' has now bin data = {}".format(
+            type(self).__name__,
+        	publisher.name,
+        	bin(publisher.data))
+        )
+        
+        
+# 发布者
+df = Formatter('formatter')
+# 订阅者
+bf = BinaryFormatter()
+df.add(bf)
+df.data = 3
+```
+
+### 策略模式
+
+**什么是策略模式(Strategy)**
+
+* 根据不同的输入采用不同的策略
+* 比如买东西超过10个大八折，超过20个打七折
+* 对外暴露统一的接口，内部采用不同的策略计算
+
+```python
+# 策略模式
+
+class Order:
+    def __init__(self, price, discount_strategy=None):
+        self.price = price
+        self.discount_strategy = discount_strategy
+        
+    def price_after_discount(self):
+        if self.discount_strategy:
+            discount = self.discount_strategy(self)
+        else:
+            discount = 0
+        return self.price - discount
+    
+    def __repr__(self):
+        fmt = '<Price: {}, price after discount: {}>'
+        return fmt.format(self.price, self.price_after_discount())
+    
+def ten_percent_discount(order):
+    return order.price * 0.10
+
+def on_sale_discount(order):
+    return order.price * 0.25 + 20
+
+order0 = Order(100)
+order1 = Order(100, discount_strategy=ten_percent_discount)
+order2 = Order(1000, discount_strategy=on_sale_discount)
+print(order0)
+print(order1)
+print(order2)
 ```
 
