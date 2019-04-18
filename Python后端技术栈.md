@@ -2061,3 +2061,75 @@ c2 = MyClass()
 assert c1 is c2 # 单例的，c1 c2是同一个实例
 ```
 
+## Linux常考命令
+
+### 为什么要学Linux
+
+**大部分企业应用跑在Linux server上**
+
+* 熟练在Linux服务器上操作
+* 了解Linux工作原理和常用工具
+* 需要了解查看文件、进程、内存相关的一些命令，用来调试和排查
+
+### 如何查询Linux命令的用法
+
+**Linux命令众多，如何知道一个命令的用法**
+
+* 使用man命令查询用法。但是man手册比较晦涩难懂
+* 使用包管理工具自带的help，比如pip --help
+* 这里介绍一个man的替代工具tldr。pip install tldr
+
+### 文件/目录操作命令
+
+**掌握常见的文件操作工具**
+
+* chown/chmod/chgrp
+* ls/rm/cd/cp/mv/touch/rename/ln(软连接和硬链接)等
+* locate/find/grep 定位查找和搜索
+
+### 文件查看
+
+**文件或者日志查看工具**
+
+* 编辑器 vi/nano
+* cat/head/tail 查看文件
+* more/less 交互式查看文件
+
+### 进程操作命令
+
+**掌握常见的进程操作工具**
+
+* ps 查看进程
+* kill 杀死进程 -9 -15
+* top/htop 监控进程
+
+### 内存操作命令
+
+**掌握常见的内存操作工具**
+
+* free 查看可用内存
+* 了解每一列的具体含义
+* 排查内存泄漏问题
+
+### 网络操作命令
+
+**掌握常见的网络工具**
+
+* ifconfig 查看网卡信息
+* lsof/netstat 查看端口信息
+* ssh/scp 远程登录/复制 tcpdump抓包
+
+### 用户/组操作命令
+
+**掌握常见用户和组操作**
+
+* useradd/usermod
+* groupadd/groupmod
+
+### 参考资料
+
+**学习Linux命令**
+
+* man命令可以查询用法 或者 cmd --help
+* 《鸟哥的Linux私房菜》，学习简单的shell脚本知识
+* 多用才能熟悉
