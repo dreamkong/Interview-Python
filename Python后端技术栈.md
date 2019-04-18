@@ -2133,3 +2133,96 @@ assert c1 is c2 # 单例的，c1 c2是同一个实例
 * man命令可以查询用法 或者 cmd --help
 * 《鸟哥的Linux私房菜》，学习简单的shell脚本知识
 * 多用才能熟悉
+
+## 操作系统进程和线程常考题
+
+### 进程和线程的区别
+
+**进程和线程对比**
+
+* 进程是对运行时程序的封装，是系统资源调度和分配的基本单位
+* 线程是进程的子任务，cpu调度和分配的基本单位，实现进程内并发
+* 一个进程可以包含多个线程，线程依赖进程存在，并共享进程内存
+
+### 什么是线程安全
+
+**Python中那些操作是线程安全的？**
+
+* 一个操作可以在多线程环境中安全使用，获取正确的结果
+* 线程安全的操作好比线程是顺序执行而不是并发执行的(`i += 1`不是线程安全的)
+* 一般如果涉及到写操作需要考虑如何让多个线程安全访问数据
+
+### 线程同步的方式
+
+**了解线程同步的方式，如何保证线程安全**
+
+* 互斥量(锁)：通过互斥机制防止多个线程同时访问公共资源
+* 信号量(Semphare)：控制同一时刻多个线程访问同一个资源的线程数
+* 事件(信号)：通过通知的方式保持多个线程同步
+
+### 进程间通信的方式
+
+**Inter-Process Communication进程间传递信号或者数据**
+
+* 管道/匿名管道/有名管道(pipe)
+* 信号(Signal)：比如用户使用Ctrl+c产生SIGINT程序终止信号
+* 消息队列(Message)
+* 共享内存(share memory)
+* 信号量(Semphare)
+* 套接字(socket)：最常用的方式，我们的web应用都是这种方式
+
+### Python中如何使用多线程
+
+**threading模块**
+
+* threading.Thread类用来创建线程
+* start()方法启动线程
+* 可以用join()等待线程结束
+
+```python
+import threading
+
+lock = threading.Lock()
+
+n = [0]
+
+def foo():
+    with lock:
+        n[0] = n[0] + 1
+        n[0] = n[0] + 1
+        
+threads = []
+for i in range(500000):
+    t = threading.Thread(target=foo)
+    threads.append(t)
+    
+for t in threads:
+    t.start()
+    
+print(n)
+```
+
+### Python中如何使用多进程
+
+**Python有GIL，可以用多进程实现CPU密集程序**
+
+* multiprocessing多进程模块
+* Multiprocessing.Process类实现多进程
+* 一般用在cpu密集程序，避免GIL的影响
+
+```python
+# 多进程
+import multiprocessing
+
+def fib(n):
+    if n <=1
+        return 1
+    return fib(n-1) + fib(n-2)
+
+jobs = []
+for i in range(10, 20):
+    p = multiprocessing.Process(tar=fib, args(i,))
+    jobs.append(p)
+    p.start()
+   
+```
