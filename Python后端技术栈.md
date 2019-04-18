@@ -1975,3 +1975,57 @@ print(order1)
 print(order2)
 ```
 
+## Python函数式编程常考问题
+
+### 函数式编程
+
+**Python支持部分函数式编程特性**
+
+* 把电脑的运算视作数学上的函数计算
+* 高阶函数：map/reduce/filter
+* 无副作用，相同的参数调用始终产生相同的结果
+
+```python
+list(map(lambda x: x*2, range(10)))
+
+from functools import reduce
+reduce(lambda x,y: x+y, range(1, 11))
+
+list(filter(lambda x: x%2==0, range(10)))
+```
+
+### 什么是闭包
+
+**Closure**
+
+* 绑定了外部作用域的变量的函数
+* 即使程序离开外部作用域，如果闭包仍然可见，绑定变量不会销毁
+* 每次运行外部函数都会重新创建闭包
+
+```python
+from functools import wraps
+
+# 装饰器
+def cache(func):
+    #外部变量
+    store = {}
+    
+    @wraps(func)
+    # 闭包函数
+    def _(n):
+        if n in store:
+            return store[n]
+        else:
+            res = func(n)
+            store[n] = res
+            return res
+        return _
+    
+# 斐波那契数列
+@cache
+def f(n):
+    if n <= 1:
+        return 1
+    return f(n - 1) + f(n - 2)
+```
+
