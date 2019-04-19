@@ -2333,3 +2333,127 @@ print(gc.get_threshold())
 # (700, 10, 10) 第0代阈值700 第1代阈值10 第2代阈值10
 ```
 
+## 线程练习题
+
+### 编写多线程爬虫
+
+**如何使用Python的threading模块**
+
+* 使用Python的threading模块完成一个多线程爬虫类
+* 要求1：该类可以传入最大线程数和需要抓取的网址列表
+* 要求2：该类可以通过继承的方式提供一个处理response的方法
+
+
+
+## MySQL基础常考题
+
+### 考点聚焦
+
+**MySQL基础考点**
+
+* 事务的原理、特性，事务并发控制
+* 常用的字段、含义和区别
+* 常用的数据库引擎区别
+
+### 什么是事务
+
+**Transaction**
+
+* 事务是数据库并发控制的基本单位
+* 事务可以看做是一系列SQL语句的集合
+* 事务必须要么全部执行成功，要么全部执行失败(回滚)
+
+**Transaction实例**
+
+```python
+session.begin()
+try:
+    item1 = session.query(Item).get(1)
+    item2 = session.query(Item).get(2)
+    item1.foo = 'bar'
+    item2.bar = 'foo'
+    session.commit()
+except:
+    session.rollback()
+    raise
+```
+
+### 事务的ACID特性
+
+**ACID是事务的四个基本特性**
+
+* 原子性(Atomicity)：一个事务中所有操作全部完成或者失败
+* 一致性(Consistency)：事务开始和结束之后数据完整性没有破坏
+* 隔离性(Isolation)：允许多个事务同时对数据库修改和读写
+* 持久性(Durability)：事务结束之后，修改是永久的不会丢失
+
+### 事务的并发控制可能产生哪些问题
+
+**如果不对事务进行并发控制，可能会产生四种异常情况**
+
+* 幻读(phantom read)：一个事务第二次查出现第一次没有的结果
+* 非重复读(nonrepeatable read)：一个事务重复两次读两次得到不同结果
+* 脏读(dirty read)：一个事务读取到另一个事务没有提交的修改
+* 丢失修改(lost update)：并发写入造成其中一些修改丢失
+
+### 四种事务隔离级别
+
+**为了解决并发控制异常，定义了4种事务隔离级别**
+
+* 读未提交(read uncommitted)：别的事务可以读取到未提交改变
+* 读已提交(read committed)：只能读取已经提交的数据
+* 可重复读(repeatable read)：同一个事务先后查询结果一样(Innodb)
+* 串行化(Serializable)：事务完全串行化的执行，隔离级别最高，执行效率最低
+
+### 如何解决高并发场景下的插入重复
+
+**高并发场景下，写入数据库会有数据重复问题**
+
+* 使用数据库的唯一索引
+* 使用队列异步写入
+* 使用redis等实现分布式锁
+
+### 乐观锁和悲观锁
+
+* 悲观锁：是先获取锁再操作。一锁二查三更新(select for update）
+* 乐观锁先修改，更新的时候发现数据已经变了就回滚(check and set)
+* 视需要根据响应速度、冲突频率、重试代价来判断使用哪一种
+
+### MySQL常用数据类型—字符串(文本)
+
+| 类型            | 大小                         | 描述            |
+| :-------------- | ---------------------------- | --------------- |
+| CHAR[Length]    | Length bytes                 | 0-255个字符     |
+| VARCHAR[Length] | String length + 1 or 2 bytes | 0-65535个字符   |
+| TINYTEXT        | String length + 1 bytes      | 最多255个字符   |
+| TEXT            | String length + 2 bytes      | 最多65535个字符 |
+
+### MySQL常用数据类型—数值
+
+| 类型                     | 大小    | 描述                                                         |
+| :----------------------- | ------- | ------------------------------------------------------------ |
+| TINYINT[Length]          | 1 byte  | -128至127 or 0至255 unsigned                                 |
+| SMALLINT[Length]         | 2 bytes | -32768至32767 or 0至65535 unsigned                           |
+| TINYTEXT                 | 3 bytes | -8388608至8388607 or 0至16777215 unsigned                    |
+| INT[Length]              | 4 bytes | -2147483648至2147483647 or 0至4294967295                     |
+| BIGINT[Length]           | 8 bytes | -9223372036854775808至9223372036854775807 or 0至18446744073709551615 unsigned |
+| FLOAT[Length, Decimals]  | 4 bytes | 低精度                                                       |
+| DOUBLE[Length, Decimals] | 8 bytes | 高精度                                                       |
+
+### MySQL常用数据类型—日期和时间
+
+| 类型      | 大小    | 描述                               |
+| --------- | ------- | ---------------------------------- |
+| DATE      | 3 bytes | 格式为 YYYY-MM-DD                  |
+| DATETIME  | 8 bytes | -32768至32767 or 0至65535 unsigned |
+| TIMESTAMP | 4 bytes | 范围1970-2038                      |
+
+### InnoDB vs MyISAM
+
+**两种引擎常见的区别**
+
+* MyISAM不支持事务，InnoDB支持事务
+* MyISAM不支持外键，InnoDB支持外键
+* MyISAM只支持表锁，InnoDB支持行锁和表锁
+* MyISAM支持全文索引，InnoDB不支持全文索引
+
