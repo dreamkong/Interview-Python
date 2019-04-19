@@ -2207,7 +2207,7 @@ print(n)
 **Python有GIL，可以用多进程实现CPU密集程序**
 
 * multiprocessing多进程模块
-* Multiprocessing.Process类实现多进程
+* multiprocessing.Process类实现多进程
 * 一般用在cpu密集程序，避免GIL的影响
 
 ```python
@@ -2215,14 +2215,13 @@ print(n)
 import multiprocessing
 
 def fib(n):
-    if n <=1
+    if n <= 1:
         return 1
     return fib(n-1) + fib(n-2)
 
 jobs = []
 for i in range(10, 20):
-    p = multiprocessing.Process(tar=fib, args(i,))
+    p = multiprocessing.Process(target=fib, args=(i,))
     jobs.append(p)
     p.start()
-   
 ```
